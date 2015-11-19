@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var copy = require('gulp-copy');
 var clean = require('gulp-clean');
+var watch = require('gulp-watch');
 var server = require('gulp-server-livereload');
 var browserify = require('browserify');
 var babelify = require('babelify');
@@ -43,6 +44,15 @@ gulp.task('webserver', function() {
       livereload: true,
       open: true
     }));
+});
+
+// Watch, build, reload
+gulp.task('watch', function() {
+  gulp.start('webserver');
+
+  watch('src/**/*.{jsx,html}', function() {
+    gulp.start('default');
+  });
 });
 
 gulp.task('default', ['clean', 'transpile', 'copy']);
